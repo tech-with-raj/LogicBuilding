@@ -1,182 +1,115 @@
 package main.java.dsa;
 
-/*
-    🔸 Question: Two Sum
-    Problem Statement:
-
-    Given an array of integers nums and an integer target, return indices of the two numbers such that they add up to the target.
-
-    You may assume that each input would have exactly one solution, and you may not use the same element twice.
-
-    You can return the answer in any order.
-
-🔹 Example:
-    text
-            Copy
-    Edit
-    Input: nums = [2, 7, 11, 15], target = 9
-    Output: [0, 1]
-    Explanation: Because nums[0] + nums[1] == 9, we return [0, 1].
-    🔸 Follow-up:
-    Can you come up with an algorithm that has O(n) time complexity?
-
- */
-
 import java.util.HashMap;
 import java.util.Map;
+
+/*
+ * Problem Name: Two Sum
+ *
+ * Problem Statement:
+ * Given an integer array and a target value, find the indices of
+ * the two numbers such that they add up to the target.
+ *
+ * Assumptions:
+ * 1. Exactly one valid solution exists.
+ * 2. The same element cannot be used twice.
+ * 3. Return the indices of the two numbers.
+ *
+ * Example:
+ *
+ * Input:
+ * Array = [2, 7, 11, 15]
+ * Target = 9
+ *
+ * Output:
+ * Indices: [0, 1]
+ *
+ * Explanation:
+ * Array Elements:
+ *
+ * Index 0 → 2
+ * Index 1 → 7
+ * Index 2 → 11
+ * Index 3 → 15
+ *
+ * Target:
+ * 9
+ *
+ * Required Equation:
+ * number1 + number2 = target
+ *
+ * 2 + 7 = 9
+ *
+ * Therefore:
+ * Indices = [0, 1]
+ *
+ * HashMap Strategy:
+ * - Key   = Number
+ * - Value = Index
+ *
+ * While traversing the array:
+ * - Compute complement = target - currentNumber
+ * - Check whether the complement already exists in the map.
+ * - If found, return both indices immediately.
+ *
+ * Approach:
+ * 1. Create a HashMap to store numbers and their indices.
+ * 2. Traverse the array.
+ * 3. Calculate:
+ *    complement = target - currentNumber
+ * 4. Check whether the complement exists in the map.
+ * 5. If found:
+ *    - Return the complement index and current index.
+ * 6. Otherwise:
+ *    - Store the current number and index in the map.
+ * 7. Continue until a valid pair is found.
+ * 8. Throw an exception if no valid pair exists.
+ *
+ * Time Complexity: O(n)
+ * Space Complexity: O(n)
+ *
+ * Where:
+ * n = Number of elements in the array.
+ */
 
 public class TwoSum {
 
-    public static int[] twoSum(int[] num, int target) {
+    public static int[] findTwoSumIndices(int[] numbers, int target) {
 
-        Map<Integer, Integer> map = new HashMap<>();
+        Map<Integer, Integer> numberIndexMap = new HashMap<>();
 
-        for (int i = 0; i < num.length; i++) {
+        for (int index = 0; index < numbers.length; index++) {
 
-            int complement = target - num[i];
+            int complement = target - numbers[index];
 
-            if (map.containsKey(complement)) {
+            if (numberIndexMap.containsKey(complement)) {
 
-                return new int[]{map.get(complement), i};
+                return new int[]{
+                        numberIndexMap.get(complement),
+                        index
+                };
             }
-            map.put(num[i], i);
+
+            numberIndexMap.put(numbers[index], index);
         }
+
         throw new IllegalArgumentException("No two sum solution");
     }
 
-    public static void main(String[] arg) {
-
-        int[] num = {2, 7, 11, 15};
-        int target = 9;
-
-        int[] result = twoSum(num, target);
-        System.out.println("Indices: [" + result[0] + ", " + result[1] + "]");
-    }
-
-}
-
-/*
-🧠 Line-by-Line Explanation
-java
-Copy
-Edit
-import java.util.HashMap;
-import java.util.Map;
-🔹 Imports the HashMap and Map classes from Java’s standard library.
-We use a HashMap to store numbers and their indices for quick lookup (O(1) average time).
-
-java
-Copy
-Edit
-public class TwoSumSolution {
-🔹 Declares a public class named TwoSumSolution.
-
-java
-Copy
-Edit
-    public static int[] twoSum(int[] nums, int target) {
-🔹 Declares a static method twoSum that:
-
-Takes an integer array nums and an integer target as inputs.
-
-Returns an integer array of size 2 (the indices of the two numbers that add up to target).
-
-java
-Copy
-Edit
-        Map<Integer, Integer> map = new HashMap<>();
-🔹 Initializes a HashMap:
-
-Key: number from the array
-
-Value: its index
-🧠 This helps us find if the complement (target - nums[i]) exists in O(1) time.
-
-java
-Copy
-Edit
-        for (int i = 0; i < nums.length; i++) {
-🔹 Starts a loop through the array nums from index 0 to the last index.
-
-java
-Copy
-Edit
-            int complement = target - nums[i];
-🔹 Calculates the complement:
-
-If we want two numbers to add up to target, and one number is nums[i], the other must be target - nums[i].
-
-java
-Copy
-Edit
-            if (map.containsKey(complement)) {
-🔹 Checks if the complement already exists in the HashMap.
-
-If yes, that means we've already seen a number which, with nums[i], adds up to the target.
-
-java
-Copy
-Edit
-                return new int[] { map.get(complement), i };
-🔹 If the complement exists:
-
-We return the pair of indices: one from the map (complement's index), and the current index i.
-
-java
-Copy
-Edit
-            }
-🔹 Ends the if-block.
-
-java
-Copy
-Edit
-            map.put(nums[i], i);
-🔹 If complement not found, we add the current number and its index to the map for future use.
-
-java
-Copy
-Edit
-        }
-🔹 Ends the for-loop.
-
-java
-Copy
-Edit
-        throw new IllegalArgumentException("No two sum solution");
-🔹 If no such pair is found in the array (shouldn’t happen if input is valid), we throw an exception.
-
-🔽 main method
-java
-Copy
-Edit
     public static void main(String[] args) {
-🔹 Entry point of the program.
 
-java
-Copy
-Edit
-        int[] nums = {2, 7, 11, 15};
+        int[] numbers = {2, 7, 11, 15};
+
         int target = 9;
-🔹 Sample input array and target.
 
-java
-Copy
-Edit
-        int[] result = twoSum(nums, target);
-🔹 Calls the twoSum method and stores the result (indices of numbers that sum up to target).
+        int[] result = findTwoSumIndices(numbers, target);
 
-java
-Copy
-Edit
-        System.out.println("Indices: [" + result[0] + ", " + result[1] + "]");
-🔹 Prints the indices of the two numbers found.
-
-✅ Output:
-makefile
-Copy
-Edit
-Indices: [0, 1]
-Because nums[0] + nums[1] = 2 + 7 = 9
-
- */
+        System.out.println(
+                "Indices: ["
+                        + result[0]
+                        + ", "
+                        + result[1]
+                        + "]"
+        );
+    }
+}

@@ -6,16 +6,40 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 /*
-Problem Statement:
-Given a list of integers containing null values, filter out null elements and
-return only numbers that start with digit '1'.
-
-Input:
-[1, 23, 78, 124, null, 150]
-
-Output:
-[1, 124, 150]
-*/
+ * Problem Name: Filter Numbers Starting with Digit '1'
+ *
+ * Problem Statement:
+ * Given a list of integers containing null values, filter out the null elements
+ * and return only the numbers whose first digit is '1'.
+ *
+ * Example:
+ *
+ * Input:
+ * [1, 23, 78, 124, null, 150]
+ *
+ * Output:
+ * [1, 124, 150]
+ *
+ * Explanation:
+ * - Remove null values from the list.
+ * - Convert each number to a String.
+ * - Check whether the String representation starts with '1'.
+ * - Collect all matching numbers into a new list.
+ *
+ * Approach:
+ * 1. Create a stream from the input list.
+ * 2. Filter out null values using Objects::nonNull.
+ * 3. Convert each number to its String representation.
+ * 4. Check whether the String starts with the digit '1'.
+ * 5. Collect the filtered numbers into a List.
+ * 6. Print the resulting list.
+ *
+ * Time Complexity: O(n)
+ * Space Complexity: O(n)
+ *
+ * Where:
+ * n = Number of elements in the input list.
+ */
 
 public class FilterNumbersStartingWithOne {
 
@@ -38,7 +62,7 @@ public class FilterNumbersStartingWithOne {
                 // Keep numbers starting with digit '1'
                 .filter(number -> number.toString().startsWith("1"))
 
-                .collect(Collectors.toList());
+                .toList();
 
         System.out.println("Filtered Output : " + finalOutput);
     }
